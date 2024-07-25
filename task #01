@@ -1,0 +1,90 @@
+CODE:
+// WordCounter.java
+package com.example.wordcounter;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class WordCounter {
+    public static void main(String[] args) {
+        JFrame frame = new WordCounterFrame();
+        frame.setTitle("Word Counter");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+
+// WordCounterFrame.java
+package com.example.wordcounter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class WordCounterFrame extends JFrame {
+    private JTextArea textArea;
+    private JLabel wordCountLabel;
+    private JButton countButton;
+
+    public WordCounterFrame() {
+        createComponents();
+        setLayout();
+        addComponents();
+        addBehaviors();
+        display();
+    }
+
+    private void createComponents() {
+        textArea = new JTextArea(10, 30);
+        wordCountLabel = new JLabel("Word Count: 0");
+        countButton = new JButton("Count Words");
+    }
+
+    private void setLayout() {
+        Container container = getContentPane();
+        container.setLayout(new BorderLayout());
+    }
+
+    private void addComponents() {
+        Container container = getContentPane();
+        container.add(new JScrollPane(textArea), BorderLayout.CENTER);
+        JPanel panel = new JPanel();
+        panel.add(countButton);
+        panel.add(wordCountLabel);
+        container.add(panel, BorderLayout.SOUTH);
+    }
+
+    private void addBehaviors() {
+        countButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textArea.getText();
+                int wordCount = countWords(text);
+                wordCountLabel.setText("Word Count: " + wordCount);
+            }
+        });
+    }
+
+    private int countWords(String text) {
+        if (text == null || text.isEmpty()) {
+            return 0;
+        }
+        String[] words = text.split("\\s+");
+        return words.length;
+    }
+
+    private void display() {
+        setSize(400, 300);
+        setVisible(true);
+    }
+}
+
+private int countWords(String text) {
+    if (text == null || text.isEmpty()) {
+        return 0;
+    }
+    String[] words = text.split("\\s+");
+    return words.length;
+}
